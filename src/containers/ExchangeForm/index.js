@@ -13,12 +13,16 @@ import ExchangeInput from '../../components/ExchangeInput';
 import Button from '../../components/Button';
 
 const RATES_UPDATE_INTERVAL = 10000;
+const AMOUNT_INPUT_NAME = 'amount';
+const RESULT_INPUT_NAME = 'result';
 
 class ExchangeForm extends Component {
 
     constructor(props) {
         super(props);
         this.actions = bindActionCreators(Actions, props.dispatch);
+
+        this.lastInputChanged = null;
     }
 
     componentWillMount() {
@@ -45,18 +49,21 @@ class ExchangeForm extends Component {
         const ratesChanged = exchangeRates !== nextProps.exchangeRates;
         const accountFromChanged = exchangeFromAccount !== nextProps.exchangeFromAccount;
         const accountToChanged = exchangeToAccount !== nextProps.exchangeToAccount;
-        const rate = this.getConversionRate(nextProps.exchangeFromAccount.currency, nextProps.exchangeToAccount.currency);
+        const accountChanged = accountFromChanged || accountToChanged;
+        const lastChangedAmount = this.lastInputChanged === AMOUNT_INPUT_NAME;
+        const lastChangedResult = this.lastInputChanged === RESULT_INPUT_NAME;
+        const nextRate = this.getConversionRate(nextProps.exchangeFromAccount.currency, nextProps.exchangeToAccount.currency);
 
         if (ratesChanged || accountFromChanged || accountToChanged) {
-            this.updateRate(rate);
+            this.updateRate(nextRate);
         }
 
-        if (accountFromChanged) {
-            this.syncResultInput(exchangeAmount, nextProps.exchangeFromAccount.currency, rate);
+        if ((accountChanged || ratesChanged) && lastChangedAmount) {
+            this.syncResultInput(exchangeAmount, nextProps.exchangeFromAccount.currency, nextRate);
         }
 
-        if (accountToChanged) {
-            this.syncAmountInput(exchangeResult, nextProps.exchangeToAccount.currency, rate);
+        if ((accountChanged || ratesChanged) && lastChangedResult) {
+            this.syncAmountInput(exchangeResult, nextProps.exchangeToAccount.currency, nextRate);
         }
     }
 
@@ -97,6 +104,8 @@ class ExchangeForm extends Component {
         
         this.actions.inputAmount(value);
         this.syncResultInput(value.floatValue, exchangeFromAccount.currency, rate);
+
+        this.lastInputChanged = AMOUNT_INPUT_NAME;
     }
 
     syncResultInput = (amountValue, currency, rate) => {
@@ -116,6 +125,8 @@ class ExchangeForm extends Component {
         
         this.actions.inputResult(value);
         this.syncAmountInput(value.floatValue, exchangeToAccount.currency, rate);
+
+        this.lastInputChanged = RESULT_INPUT_NAME;
     }
 
     syncAmountInput = (resultValue, currency, rate) => {
