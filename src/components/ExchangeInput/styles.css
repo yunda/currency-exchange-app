@@ -1,0 +1,23 @@
+.wrapper {
+    position: absolute;
+    top: 40px;
+    right: 16px;
+    font-size: 35px;
+}
+
+.input {
+    border: none;
+    border-bottom: 2px solid black;
+    font-size: 35px;
+    height: 38px;
+    padding: 0;
+    background: transparent;
+    text-align: right;
+    margin-bottom: 10px;
+}
+
+.input:focus {
+    border: none;
+    outline: none;
+    border-bottom: 2px solid #0075EB;
+}

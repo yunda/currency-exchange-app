@@ -1,0 +1,15 @@
+.informer {
+    position: absolute;
+    background: #fff;
+    height: 32px;
+    border-radius: 16px;
+    color: #000;
+    border: 2px solid rgb(242,243,244);
+    z-index: 100;
+    left: 50%;
+    top: 160px;
+    transform: translate(-50%, -50%);
+    padding: 0 14px;
+    line-height: 32px;
+    vertical-align: middle;
+}

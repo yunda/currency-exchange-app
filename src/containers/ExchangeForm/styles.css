@@ -1,0 +1,24 @@
+.form {
+    width: 375px;
+    margin: auto;
+    position: relative;
+}
+
+.accountSection {
+    position: relative;
+    height: 160px;
+}
+
+.accountFromSection {
+    composes: accountSection;
+    background: #fff;
+}
+
+.accountToSection {
+    composes: accountSection;
+    background: rgb(242,243,244);
+}
+
+.actions {
+    text-align: center;
+}

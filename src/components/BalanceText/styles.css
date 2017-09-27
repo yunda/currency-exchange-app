@@ -1,0 +1,9 @@
+.regular {
+    font-size: 14px;
+    color: rgb(139, 149, 158);
+}
+
+.invalid {
+    composes: regular;
+    color: rgb(233, 0, 142);
+}

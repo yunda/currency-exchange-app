@@ -1,0 +1,12 @@
+.feeInformer {
+    font-size: 14px;
+    color: rgb(139, 149, 158);
+    text-align: right;
+}
+
+.icon {
+    width: 16px;
+    height: 16px;
+    margin-left: 3px;
+    transform: translateY(2px)
+}

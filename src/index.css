@@ -1,0 +1,18 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto:400,500');
+
+body {
+    font-family: Roboto, -apple-system, "Helvetica Neue", Helvetica, "Segoe UI", Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    background-image: linear-gradient(to bottom,
+        #FFFFFF 0px,
+        #FFFFFF 160px,
+        rgb(242,243,244) 160px,
+        rgb(242,243,244) 100%
+    );
+}
+
+input {
+    font-family: Roboto, -apple-system, "Helvetica Neue", Helvetica, "Segoe UI", Arial, sans-serif;
+}

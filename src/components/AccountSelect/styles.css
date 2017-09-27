@@ -1,0 +1,49 @@
+.AccountSelect {
+    position: absolute;
+    top: 40px;
+}
+
+:global .AccountSelect-root {
+    display: inline-block;
+    margin-bottom: 14px;
+}
+
+:global .AccountSelect-placeholder {
+    font-size: 35px;
+    display: inline-block;
+    margin-right: 10px;
+}
+
+:global .AccountSelect-control {
+    display: inline-block;
+}
+
+:global .AccountSelect-arrow {
+    content: url(./arrow-dropdown.svg);
+    position: relative;
+    top: -5px;
+}
+
+:global .AccountSelect-menu {
+    position: absolute;
+    min-width: 90px;
+    left: -10px;
+    background: white;
+    box-shadow: 0 0 0.25rem rgba(0, 0, 0, .08), 0 0.5rem 0.75rem rgba(0, 0, 0, .14);
+    z-index: 1;
+}
+
+:global .AccountSelect-option {
+    padding: 5px 10px;
+    font-size: 25px;
+    cursor: pointer;
+}
+
+:global .AccountSelect-option:hover {
+    background: #b6daff;
+}
+
+:global .AccountSelect-option.is-selected {
+    font-weight: 500;
+}
+
