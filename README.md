@@ -31,4 +31,4 @@ The app is ready to be deployed!
 
 ## Demo
 
-[Link](http://exchange-app.s3-website.eu-west-2.amazonaws.com/). Please don't leave the tab open for long as I have limited requests allowence on https://openexchangerates.org for rates data.
+[Link](http://exchange-app.s3-website.eu-west-2.amazonaws.com/). Please don't leave the tab open for long as I have limited requests allowence on https://openexchangerates.org which provides exchange rates data.
