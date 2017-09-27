@@ -1,7 +1,7 @@
 import queryString from 'query-string';
 
 const RATES_API_ENDPOINT = 'https://openexchangerates.org/api/latest.json';
-const APP_ID = 'f873747ea60e4f96a7550602d6f12b99';
+const APP_ID = '8474015f5a7e4879b488633af03d6aeb';
 
 export default class RatesApiService {
     static fetchAll() {
