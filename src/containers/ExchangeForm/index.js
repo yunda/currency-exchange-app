@@ -36,12 +36,27 @@ class ExchangeForm extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        const {exchangeRates, exchangeFromAccount, exchangeToAccount} = this.props;
+        const {
+            exchangeRates,
+            exchangeFromAccount,
+            exchangeToAccount,
+            exchangeAmount,
+            exchangeResult} = this.props;
+        const ratesChanged = exchangeRates !== nextProps.exchangeRates;
+        const accountFromChanged = exchangeFromAccount !== nextProps.exchangeFromAccount;
+        const accountToChanged = exchangeToAccount !== nextProps.exchangeToAccount;
+        const rate = this.getConversionRate(nextProps.exchangeFromAccount.currency, nextProps.exchangeToAccount.currency);
 
-        if (exchangeRates !== nextProps.exchangeRates
-            || exchangeFromAccount !== nextProps.exchangeFromAccount
-            || exchangeToAccount !== nextProps.exchangeToAccount) {
-            this.updateRate(nextProps.exchangeFromAccount, nextProps.exchangeToAccount);
+        if (ratesChanged || accountFromChanged || accountToChanged) {
+            this.updateRate(rate);
+        }
+
+        if (accountFromChanged) {
+            this.syncResultInput(exchangeAmount, nextProps.exchangeFromAccount.currency, rate);
+        }
+
+        if (accountToChanged) {
+            this.syncAmountInput(exchangeResult, nextProps.exchangeToAccount.currency, rate);
         }
     }
 
@@ -78,12 +93,17 @@ class ExchangeForm extends Component {
     }
 
     onAmountChange = (e, value) => {
-        const {rate, exchangeToAccount} = this.props;
-        const resultWithoutFee = value.floatValue * rate;
-        const fee = this.calculateFee(resultWithoutFee, exchangeToAccount.currency);
-        const resultValue = _.round(resultWithoutFee + fee, 2);
+        const {rate, exchangeFromAccount} = this.props;
         
         this.actions.inputAmount(value);
+        this.syncResultInput(value.floatValue, exchangeFromAccount.currency, rate);
+    }
+
+    syncResultInput = (amountValue, currency, rate) => {
+        const resultWithoutFee = amountValue * rate;
+        const fee = this.calculateFee(resultWithoutFee, currency);
+        const resultValue = _.round(resultWithoutFee + fee, 2);
+
         this.actions.inputResult({
             floatValue: resultValue,
             formattedValue: !!resultValue ? resultValue.toString() : ''
@@ -92,12 +112,17 @@ class ExchangeForm extends Component {
     }
     
     onResultChange = (e, value) => {
-        const {rate, exchangeFromAccount} = this.props;
-        const amountWithoutFee = value.floatValue / rate;
-        const fee = this.calculateFee(amountWithoutFee, exchangeFromAccount.currency);
+        const {rate, exchangeToAccount} = this.props;
+        
+        this.actions.inputResult(value);
+        this.syncAmountInput(value.floatValue, exchangeToAccount.currency, rate);
+    }
+
+    syncAmountInput = (resultValue, currency, rate) => {
+        const amountWithoutFee = resultValue / rate;
+        const fee = this.calculateFee(amountWithoutFee, currency);
         const amountValue = _.round(amountWithoutFee + fee, 2);
 
-        this.actions.inputResult(value);
         this.actions.inputAmount({
             floatValue: amountValue,
             formattedValue: !!amountValue ? amountValue.toString() : ''
@@ -120,12 +145,11 @@ class ExchangeForm extends Component {
         return _(currencyOptions).keyBy('symbol').mapValues(item => item.sign).value();
     }
 
-    updateRate(fromAccount, toAccount) {
-        const rate = fx.convert(1, {
-            from: fromAccount.currency,
-            to: toAccount.currency
-        });
+    getConversionRate(from, to) {
+        return fx.convert(1, {from, to});
+    }
 
+    updateRate(rate) {
         this.actions.setRate(rate);
     }
 
