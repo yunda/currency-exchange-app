@@ -58,10 +58,22 @@ class ExchangeForm extends Component {
     }
 
     onFromAccountChange = (selectedAccount) => {
+        const {exchangeFromAccount, exchangeToAccount} = this.props;
+        
+        if (_.eq(selectedAccount, exchangeToAccount)) {
+            this.actions.selectExchangeTo(exchangeFromAccount);
+        }
+
         this.actions.selectExchangeFrom(selectedAccount);
     }
 
     onToAccountChange = (selectedAccount) => {
+        const {exchangeFromAccount, exchangeToAccount} = this.props;
+
+        if (_.eq(selectedAccount, exchangeFromAccount)) {
+            this.actions.selectExchangeFrom(exchangeToAccount);
+        }
+
         this.actions.selectExchangeTo(selectedAccount);
     }
 
@@ -166,8 +178,7 @@ class ExchangeForm extends Component {
                         accounts={accounts}
                         selectedAccount={exchangeToAccount}
                         onChange={this.onToAccountChange}
-                        currencySign={exchangeToCurrencySign}
-                        otherOptions />
+                        currencySign={exchangeToCurrencySign} />
                     <ExchangeInput
                         value={exchangeResultInput}
                         operationSymbol={'+'}
