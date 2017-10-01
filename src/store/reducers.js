@@ -13,7 +13,7 @@ import {
     SET_RESULT_FEE
   } from "./actions";
 
-const initialState = {
+export const initialState = {
     accounts: accounts,
     exchangeRates: {},
     currencyOptions: currencyOptions,

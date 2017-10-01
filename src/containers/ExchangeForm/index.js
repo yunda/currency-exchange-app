@@ -54,7 +54,7 @@ class ExchangeForm extends Component {
         const lastChangedResult = this.lastInputChanged === RESULT_INPUT_NAME;
         const nextRate = this.getConversionRate(nextProps.exchangeFromAccount.currency, nextProps.exchangeToAccount.currency);
 
-        if (ratesChanged || accountFromChanged || accountToChanged) {
+        if (accountChanged || ratesChanged) {
             this.updateRate(nextRate);
         }
 
@@ -108,7 +108,7 @@ class ExchangeForm extends Component {
         this.lastInputChanged = AMOUNT_INPUT_NAME;
     }
 
-    syncResultInput = (amountValue, currency, rate) => {
+    syncResultInput(amountValue, currency, rate) {
         const resultWithoutFee = amountValue * rate;
         const fee = this.calculateFee(resultWithoutFee, currency);
         const resultValue = _.round(resultWithoutFee + fee, 2);
@@ -129,7 +129,7 @@ class ExchangeForm extends Component {
         this.lastInputChanged = RESULT_INPUT_NAME;
     }
 
-    syncAmountInput = (resultValue, currency, rate) => {
+    syncAmountInput(resultValue, currency, rate) {
         const amountWithoutFee = resultValue / rate;
         const fee = this.calculateFee(amountWithoutFee, currency);
         const amountValue = _.round(amountWithoutFee + fee, 2);
@@ -213,7 +213,8 @@ class ExchangeForm extends Component {
                         accounts={accounts}
                         selectedAccount={exchangeToAccount}
                         onChange={this.onToAccountChange}
-                        currencySign={exchangeToCurrencySign} />
+                        currencySign={exchangeToCurrencySign}
+                        otherOption />
                     <ExchangeInput
                         value={exchangeResultInput}
                         operationSymbol={'+'}

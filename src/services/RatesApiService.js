@@ -15,7 +15,7 @@ export default class RatesApiService {
             .catch(error => console.error(error)); 
     }
 
-    static fetchRatesForSymbols(currencies) {
+    static fetchRatesForSymbols(currencies: Array<Sring>) {
         const q = queryString.stringify({
             app_id: APP_ID,
             symbols: currencies.join(',')

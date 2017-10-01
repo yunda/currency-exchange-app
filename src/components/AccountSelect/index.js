@@ -2,10 +2,11 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import noop from 'lodash/noop';
 import find from 'lodash/find';
-import concat from 'lodash/concat';
 import Dropdown from 'react-dropdown';
 import BalanceText from '../BalanceText';
 import styles from './styles.css';
+
+const OTHER_OPTION = 'Other';
 
 export default class AccountSelect extends Component {
     static propTypes = {
@@ -20,21 +21,21 @@ export default class AccountSelect extends Component {
     static defaultProps = {
         options: [],
         onChange: noop,
-        isValid: true
+        isValid: true,
+        otherOptions: false
     };
 
-    onChange = (option) => {
+    onChange = (option, e) => {
+        if (option.value === OTHER_OPTION) {
+            return console.log(option, e);
+        }
         this.props.onChange(find(this.props.accounts, {currency: option.value}))
     }
 
-    mapAccounts(accounts) {
-        return accounts.map(account => account.currency);
-    }
-
     getOptions(accounts, otherOptions) {
-        const accountOptions = this.mapAccounts(accounts);
+        const accountOptions = accounts.map(account => account.currency);
 
-        return otherOptions ? concat(accountOptions, 'Other') : accountOptions;
+        return otherOptions ? [...accountOptions, OTHER_OPTION] : accountOptions;
     }
 
     render() {
