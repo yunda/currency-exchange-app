@@ -2,6 +2,14 @@
 
 To run the project locally you need to have [Node.js](https://nodejs.org/en/) installed on your machine. v7.3.0 is the recommended version. Once it's installed run `npm install` from the project directory.
 
+## Technological stack
+
+JS: [React](https://reactjs.org/), [Redux](http://redux.js.org/), [Flow](https://flow.org/)
+
+Styles: [CSS Modules](https://github.com/css-modules/css-modules)
+
+Tests: [Jest](https://facebook.github.io/jest/), [Enzyme](http://airbnb.io/enzyme/)
+
 ## Available Scripts
 
 In the project directory, you can run:
