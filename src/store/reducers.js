@@ -66,12 +66,14 @@ function exchangeReducer(state = initialState, action) {
         case SET_AMOUNT_FEE: 
             return {
                 ...state,
-                amountFee: action.fee
+                amountFee: action.fee,
+                resultFee: 0
             }
         case SET_RESULT_FEE: 
             return {
                 ...state,
-                resultFee: action.fee
+                resultFee: action.fee,
+                amountFee: 0
             }
         default:
             return state;
