@@ -7,7 +7,7 @@ export default class BalanceText extends Component {
     static propTypes = {
         isValid: PropTypes.bool,
         value: PropTypes.number,
-        currencySign: PropTypes.string
+        currencySymbol: PropTypes.string
     };    
 
     static defaultProps = {
@@ -17,7 +17,7 @@ export default class BalanceText extends Component {
     };
 
     render() {
-        const {isValid, value, currencySign} = this.props;
+        const {isValid, value, currencySymbol} = this.props;
         const {regular, invalid} = styles;
 
         return (
@@ -26,7 +26,7 @@ export default class BalanceText extends Component {
                 <NumberFormat
                     value={value}
                     displayType={'text'}
-                    prefix={currencySign}
+                    prefix={currencySymbol}
                     decimalPrecision={2}
                     thousandSeparator />
             </div>

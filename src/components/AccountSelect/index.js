@@ -2,27 +2,32 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import noop from 'lodash/noop';
 import find from 'lodash/find';
+import get from 'lodash/get';
 import Dropdown from 'react-dropdown';
-import BalanceText from '../BalanceText';
 import styles from './styles.css';
+
+// components
+import BalanceText from '../BalanceText';
+import FlagIcon from '../FlagIcon';
 
 const OTHER_OPTION = 'Other';
 
 export default class AccountSelect extends Component {
+
     static propTypes = {
         accounts: PropTypes.array,
+        currencyOptions: PropTypes.array,
         onChange: PropTypes.func,
-        value: PropTypes.object,
+        selectedAccount: PropTypes.object,
         isValid: PropTypes.bool,
-        currencySign: PropTypes.string,
-        otherOptions: PropTypes.bool
+        otherOption: PropTypes.bool
     };    
 
     static defaultProps = {
-        options: [],
+        accounts: [],
         onChange: noop,
         isValid: true,
-        otherOptions: false
+        otherOption: false
     };
 
     onChange = (option, e) => {
@@ -32,25 +37,40 @@ export default class AccountSelect extends Component {
         this.props.onChange(find(this.props.accounts, {currency: option.value}))
     }
 
-    getOptions(accounts, otherOptions) {
-        const accountOptions = accounts.map(account => account.currency);
+    getOptions(accounts, currencyOptions, otherOption) {
+        const accountOptions = accounts.map(account => {
+            const currencyOption = find(currencyOptions, {code: account.currency});
 
-        return otherOptions ? [...accountOptions, OTHER_OPTION] : accountOptions;
+            return {
+                value: account.currency,
+                label: (
+                    <div className={styles.option}>
+                        <span className={styles.optionText}>{account.currency}</span>
+                        <FlagIcon name={currencyOption.flag} />
+                    </div>
+                )
+            };
+        });
+
+        return otherOption ? [...accountOptions, OTHER_OPTION] : accountOptions;
     }
 
     render() {
-        const {accounts, selectedAccount, isValid, currencySign, otherOptions} = this.props;
+        const {accounts, currencyOptions, selectedAccount, isValid, otherOption} = this.props;
+        const selectedAccountSymbol = get(find(currencyOptions, {code: selectedAccount.currency}), 'symbol', '');
+        const options = this.getOptions(accounts, currencyOptions, otherOption);
+        const value = find(options, {value: selectedAccount.currency});
 
         return (
             <div className={styles.AccountSelect}>
                 <Dropdown 
                     baseClassName={'AccountSelect'}
-                    options={this.getOptions(accounts, otherOptions)}
+                    options={options}
                     onChange={this.onChange}
-                    value={selectedAccount.currency} />
+                    value={value} />
                 <BalanceText
                     value={selectedAccount.balance}
-                    currencySign={currencySign}
+                    currencySymbol={selectedAccountSymbol}
                     isValid={isValid} />
             </div>
         );

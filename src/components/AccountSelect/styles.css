@@ -3,6 +3,13 @@
     top: 40px;
 }
 
+.option {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
 :global .AccountSelect-root {
     display: inline-block;
     margin-bottom: 14px;
@@ -12,6 +19,10 @@
     font-size: 35px;
     display: inline-block;
     margin-right: 10px;
+}
+
+:global .AccountSelect-placeholder svg {
+    display: none;
 }
 
 :global .AccountSelect-control {
@@ -26,11 +37,11 @@
 
 :global .AccountSelect-menu {
     position: absolute;
-    min-width: 90px;
+    min-width: 130px;
     left: -10px;
     background: white;
     box-shadow: 0 0 0.25rem rgba(0, 0, 0, .08), 0 0.5rem 0.75rem rgba(0, 0, 0, .14);
-    z-index: 1;
+    z-index: 2;
 }
 
 :global .AccountSelect-option {
@@ -40,7 +51,7 @@
 }
 
 :global .AccountSelect-option:hover {
-    background: #b6daff;
+    background: #d2e8ff
 }
 
 :global .AccountSelect-option.is-selected {

@@ -7,16 +7,16 @@ import infoIcon from './info-icon.svg'
 export default class FeeInformer extends Component {
     static propTypes = {
         value: PropTypes.number,
-        currencySign: PropTypes.string
+        currencySymbol: PropTypes.string
     };    
 
     static defaultProps = {
         value: 0,
-        currencySign: ''
+        currencySymbol: ''
     };
 
     render() {
-        const {value, currencySign} = this.props;
+        const {value, currencySymbol} = this.props;
 
         return (
             <div className={styles.feeInformer}>
@@ -24,7 +24,7 @@ export default class FeeInformer extends Component {
                 <NumberFormat
                     value={value}
                     displayType={'text'}
-                    prefix={currencySign}
+                    prefix={currencySymbol}
                     decimalPrecision={2} />
                 <img className={styles.icon} src={infoIcon} alt="" />
             </div>

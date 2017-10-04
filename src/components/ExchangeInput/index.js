@@ -9,7 +9,7 @@ export default class ExchangeInput extends Component {
     static propTypes = {
         value: PropTypes.string,
         operationSymbol: PropTypes.string,
-        currencySign: PropTypes.string,
+        currencySymbol: PropTypes.string,
         onChange: PropTypes.func,
         inputId: PropTypes.string,
         fee: PropTypes.number
@@ -24,7 +24,7 @@ export default class ExchangeInput extends Component {
     };
 
     render() {
-        const {value, operationSymbol, onChange, inputId, fee, currencySign} = this.props;
+        const {value, operationSymbol, onChange, inputId, fee, currencySymbol} = this.props;
 
         return (
             <div className={styles.wrapper}>
@@ -38,7 +38,7 @@ export default class ExchangeInput extends Component {
                     type={'tel'}
                     onChange={onChange}
                     placeholder={'0'} />
-                {fee ? <FeeInformer value={fee} currencySign={currencySign} /> : null}
+                {fee ? <FeeInformer value={fee} currencySymbol={currencySymbol} /> : null}
             </div>
         );
     }

@@ -68,14 +68,14 @@ class ExchangeForm extends Component {
     }
 
     watchRates(accounts) {
-        const symbols = accounts.map(account => account.currency);
+        const currencyCodes = accounts.map(account => account.currency);
 
-        this.actions.fetchRatesForSymbols(symbols);
+        this.actions.fetchRatesForCurrencies(currencyCodes);
 
         this.ratesUpdateInteraval && clearInterval(this.ratesUpdateInteraval);
 
         this.ratesUpdateInteraval = setInterval(() => {
-            this.actions.fetchRatesForSymbols(symbols);
+            this.actions.fetchRatesForCurrencies(currencyCodes);
         }, RATES_UPDATE_INTERVAL);
     }
 
@@ -100,10 +100,10 @@ class ExchangeForm extends Component {
     }
 
     onAmountChange = (e, value) => {
-        const {rate, exchangeFromAccount} = this.props;
+        const {rate, exchangeToAccount} = this.props;
         
         this.actions.inputAmount(value);
-        this.syncResultInput(value.floatValue, exchangeFromAccount.currency, rate);
+        this.syncResultInput(value.floatValue, exchangeToAccount.currency, rate);
 
         this.lastInputChanged = AMOUNT_INPUT_NAME;
     }
@@ -121,10 +121,10 @@ class ExchangeForm extends Component {
     }
     
     onResultChange = (e, value) => {
-        const {rate, exchangeToAccount} = this.props;
+        const {rate, exchangeFromAccount} = this.props;
         
         this.actions.inputResult(value);
-        this.syncAmountInput(value.floatValue, exchangeToAccount.currency, rate);
+        this.syncAmountInput(value.floatValue, exchangeFromAccount.currency, rate);
 
         this.lastInputChanged = RESULT_INPUT_NAME;
     }
@@ -151,9 +151,9 @@ class ExchangeForm extends Component {
         return valueInLimitCurrency > freeLimit ? value * rate : 0;
     }
 
-    getSignsMap(currencyOptions) {
+    getSymbolsMap(currencyOptions) {
         // creates symbol: sign map out of currency options
-        return _(currencyOptions).keyBy('symbol').mapValues(item => item.sign).value();
+        return _(currencyOptions).keyBy('code').mapValues(item => item.symbol).value();
     }
 
     getConversionRate(from, to) {
@@ -181,45 +181,44 @@ class ExchangeForm extends Component {
             rate,
             amountFee,
             resultFee } = this.props;
-        const signsMap = this.getSignsMap(currencyOptions);
-        const exhcnageFromCurrencySign = signsMap[exchangeFromAccount.currency];
-        const exchangeToCurrencySign = signsMap[exchangeToAccount.currency];
+        const symbolsMap = this.getSymbolsMap(currencyOptions);
+        const exhcnageFromSymbol = symbolsMap[exchangeFromAccount.currency];
+        const exchangeToSymbol = symbolsMap[exchangeToAccount.currency];
 
         return (
             <form className={styles.form}>
                 <section className={styles.accountFromSection}>
                     <AccountSelect
                         accounts={accounts}
+                        currencyOptions={currencyOptions}
                         selectedAccount={exchangeFromAccount}
                         onChange={this.onFromAccountChange}
-                        currencySign={exhcnageFromCurrencySign}
                         isValid={this.isValid()} />
                     <ExchangeInput
                         inputId={'from-account-input'}
                         value={exchangeAmountInput}
                         operationSymbol={'−'}
                         onChange={this.onAmountChange}
-                        currencySign={exhcnageFromCurrencySign}
+                        currencySymbol={exhcnageFromSymbol}
                         fee={amountFee} />
                 </section>
                 {rate ?
                     <RateInformer
                         rate={rate}
-                        exhcnageFromCurrencySign={exhcnageFromCurrencySign}
-                        exchangeToCurrencySign={exchangeToCurrencySign} />
+                        exhcnageFromSymbol={exhcnageFromSymbol}
+                        exchangeToSymbol={exchangeToSymbol} />
                     : null}
                 <section className={styles.accountToSection}>
                     <AccountSelect
                         accounts={accounts}
+                        currencyOptions={currencyOptions}
                         selectedAccount={exchangeToAccount}
-                        onChange={this.onToAccountChange}
-                        currencySign={exchangeToCurrencySign}
-                        otherOption />
+                        onChange={this.onToAccountChange} />
                     <ExchangeInput
                         value={exchangeResultInput}
                         operationSymbol={'+'}
                         onChange={this.onResultChange}
-                        currencySign={exchangeToCurrencySign}
+                        currencySymbol={exchangeToSymbol}
                         fee={resultFee} />
                 </section>
                 <section className={styles.actions}>

@@ -5,8 +5,8 @@ import NumberFormat from 'react-number-format';
 
 export default class RateInformer extends Component {
     static propTypes = {
-        exhcnageFromCurrencySign: PropTypes.string,
-        exchangeToCurrencySign: PropTypes.string,
+        exhcnageFromSymbol: PropTypes.string,
+        exchangeToSymbol: PropTypes.string,
         rate: PropTypes.number
     };    
 
@@ -17,15 +17,15 @@ export default class RateInformer extends Component {
     };
 
     render() {
-        const {exhcnageFromCurrencySign, exchangeToCurrencySign, rate} = this.props;
+        const {exhcnageFromSymbol, exchangeToSymbol, rate} = this.props;
 
         return (
             <div className={styles.informer}>
-                <span>{exhcnageFromCurrencySign}1&nbsp;=&nbsp;</span>
+                <span>{exhcnageFromSymbol}1&nbsp;=&nbsp;</span>
                 <NumberFormat
                     value={rate}
                     displayType={'text'}
-                    prefix={exchangeToCurrencySign}
+                    prefix={exchangeToSymbol}
                     decimalPrecision={4} />
             </div>
         );

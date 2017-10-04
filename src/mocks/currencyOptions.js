@@ -1,27 +1,32 @@
 export default [
     {
-        symbol: 'USD',
+        code: 'USD',
         name: 'US Dollar',
-        sign: '$'
+        symbol: '$',
+        flag: 'united-states-of-america'
     },
     {
-        symbol: 'GBP',
+        code: 'GBP',
         name: 'British Pound',
-        sign: '£'
+        symbol: '£',
+        flag: 'united-kingdom'
     },
     {
-        symbol: 'EUR',
+        code: 'EUR',
         name: 'Euro',
-        sign: '€'
+        symbol: '€',
+        flag: 'european-union'
     },
     {
-        symbol: 'AUD',
+        code: 'AUD',
         name: 'Australian Dollar',
-        sign: 'A$'
+        symbol: 'A$',
+        flag: 'australia'
     },
     {
-        symbol: 'CHF',
+        code: 'CHF',
         name: 'Swiss Franc',
-        sign: 'Fr'
+        symbol: 'Fr',
+        flag: 'switzerland'
     }
 ];

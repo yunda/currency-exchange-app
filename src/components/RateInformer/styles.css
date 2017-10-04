@@ -5,7 +5,7 @@
     border-radius: 16px;
     color: #000;
     border: 2px solid rgb(242,243,244);
-    z-index: 100;
+    z-index: 1;
     left: 50%;
     top: 160px;
     transform: translate(-50%, -50%);

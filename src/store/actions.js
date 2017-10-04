@@ -89,9 +89,9 @@ export const fetchRates = () => {
     };
 };
 
-export const fetchRatesForSymbols = (symbols) => {
+export const fetchRatesForCurrencies = (currencies) => {
     return (dispatch) => {  
-        return RatesApiService.fetchRatesForSymbols(symbols).then((data) => {
+        return RatesApiService.fetchRatesForCurrencies(currencies).then((data) => {
             dispatch(receiveRates(data));
         });
     };

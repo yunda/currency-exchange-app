@@ -58,7 +58,8 @@
     "enzyme-adapter-react-16": "^1.0.0",
     "flow-bin": "^0.56.0",
     "jsdom": "^11.2.0",
-    "mocha": "^3.5.3"
+    "mocha": "^3.5.3",
+    "svg-react-loader": "^0.4.5"
   },
   "scripts": {
     "start": "node scripts/start.js",
